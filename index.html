@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="JAINAV — Creative Portfolio. Designer, Developer & Visual Storyteller crafting premium digital experiences." />
+    <title>JAINAV. — Portfolio</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+        rel="stylesheet" />
+
+    <!-- Noise grain SVG filter (inline so no external request) -->
+    <svg id="svg-noise" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;">
+        <filter id="noise-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"
+                result="noiseOut" />
+            <feColorMatrix type="saturate" values="0" in="noiseOut" result="greyNoise" />
+            <feBlend in="SourceGraphic" in2="greyNoise" mode="overlay" result="blend" />
+            <feComposite in="blend" in2="SourceGraphic" operator="in" />
+        </filter>
+    </svg>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- ─── Custom Cursor ─── -->
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+
+    <!-- ─── Noise Overlay ─── -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════ -->
+    <header class="nav" id="nav">
+        <div class="nav__inner">
+
+            <a href="#hero" class="nav__logo" data-cursor-hover>JAINAV.</a>
+
+            <!-- Desktop nav links -->
+            <nav class="nav__links" id="nav-links" aria-label="Primary navigation">
+                <a href="#about" class="nav__link" data-cursor-hover>About</a>
+                <a href="#projects" class="nav__link" data-cursor-hover>Projects</a>
+                <a href="#video-edits" class="nav__link" data-cursor-hover>Video Edits</a>
+                <a href="#posters" class="nav__link" data-cursor-hover>Posters &amp; Design</a>
+                <a href="#contact" class="nav__link" data-cursor-hover>Contact</a>
+            </nav>
+
+            <!-- Hamburger -->
+            <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false"
+                data-cursor-hover>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+
+        <!-- Mobile full-screen overlay -->
+        <div class="nav__overlay" id="nav-overlay" aria-hidden="true">
+            <nav class="nav__overlay-links" aria-label="Mobile navigation">
+                <a href="#about" class="nav__overlay-link" data-cursor-hover>About</a>
+                <a href="#projects" class="nav__overlay-link" data-cursor-hover>Projects</a>
+                <a href="#video-edits" class="nav__overlay-link" data-cursor-hover>Video Edits</a>
+                <a href="#posters" class="nav__overlay-link" data-cursor-hover>Posters &amp; Design</a>
+                <a href="#contact" class="nav__overlay-link" data-cursor-hover>Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ══════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════ -->
+        <section class="hero" id="hero">
+            <div class="hero__inner">
+
+                <!-- ── Left: Text Column ── -->
+                <div class="hero__left" id="hero-content">
+
+                    <!-- Small label -->
+                    <p class="hero__eyebrow">Frontend Developer &amp; Creative</p>
+
+                    <!-- Giant display heading -->
+                    <h1 class="hero__title">
+                        <span class="hero__title-line">I Build</span>
+                        <span class="hero__title-line">Things That
+                            <span class="hero__title--outline">Move.</span>
+                        </span>
+                    </h1>
+
+                    <!-- Tagline -->
+                    <p class="hero__tagline">
+                        Designing &amp; developing digital experiences that leave a mark.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="hero__cta">
+                        <a href="#projects" class="btn btn--primary" data-cursor-hover>
+                            View My Work <span class="btn__arrow">→</span>
+                        </a>
+                        <a href="#contact" class="btn btn--lime-ghost" data-cursor-hover>
+                            Let's Talk
+                        </a>
+                    </div>
+
+                    <!-- Scroll hint -->
+                    <!-- <div class="hero__scroll-hint" aria-label="Scroll down">
+                        <div class="hero__scroll-line"></div>
+                        <span class="hero__scroll-label">Scroll</span>
+                    </div> -->
+                </div>
+
+                <!-- ── Right: Animated Blob ── -->
+                <div class="hero__right" aria-hidden="true">
+                    <div class="hero__blob-wrap">
+                        <div class="hero__blob"></div>
+                        <div class="hero__blob hero__blob--ring"></div>
+                        <div class="hero__blob hero__blob--ring hero__blob--ring2"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════
+         MARQUEE TICKER
+    ══════════════════════════════════════════ -->
+        <div class="marquee-strip" aria-label="Skills ticker">
+            <div class="marquee-track">
+                <!-- Two copies for seamless infinite loop -->
+                <div class="marquee-content" aria-hidden="true">
+                    <span>Frontend Development</span><span class="marquee-dot">·</span>
+                    <span>UI/UX</span><span class="marquee-dot">·</span>
+                    <span>Video Editing</span><span class="marquee-dot">·</span>
+                    <span>Poster Design</span><span class="marquee-dot">·</span>
+                    <span>Web Design</span><span class="marquee-dot">·</span>
+                    <span>Motion Design</span><span class="marquee-dot">·</span>
+                </div>
+                <div class="marquee-content" aria-hidden="true">
+                    <span>Frontend Development</span><span class="marquee-dot">·</span>
+                    <span>UI/UX</span><span class="marquee-dot">·</span>
+                    <span>Video Editing</span><span class="marquee-dot">·</span>
+                    <span>Poster Design</span><span class="marquee-dot">·</span>
+                    <span>Web Design</span><span class="marquee-dot">·</span>
+                    <span>Motion Design</span><span class="marquee-dot">·</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════
+         ABOUT
+    ══════════════════════════════════════════ -->
+        <section class="section about" id="about">
+            <div class="section__inner">
+                <div class="about__grid">
+
+                    <!-- ── Left Column (60%) ── -->
+                    <div class="about__left" data-slide="left">
+
+                        <!-- Section label -->
+                        <p class="about__eyebrow">01 / About</p>
+
+                        <!-- Heading -->
+                        <h2 class="about__heading">Who I Am</h2>
+
+                        <!-- Bio paragraphs -->
+                        <div class="about__bio">
+                            <p>I'm a <span class="accent">frontend developer</span> and multi-disciplinary creative who
+                                lives at the intersection of code and design. I build interfaces that are fast,
+                                beautiful, and intentional — from pixel-perfect layouts to motion-rich digital
+                                experiences.</p>
+                            <p>With a strong command of modern web technologies and design tools, I bridge the gap
+                                between <span class="accent">engineering precision</span> and <span
+                                    class="accent">visual storytelling</span>. Whether it's a sleek SaaS dashboard, a
+                                portfolio site, or a social-media graphic — I bring the same obsessive attention to
+                                detail to every project.</p>
+                            <p>When I'm not writing code, I'm editing videos, crafting posters, or exploring the latest
+                                in motion design — always hunting for the next creative challenge that pushes boundaries
+                                and leaves a lasting impression.</p>
+                        </div>
+
+                        <!-- Skill tags -->
+                        <div class="about__skills">
+                            <span class="skill-tag" data-cursor-hover>HTML5</span>
+                            <span class="skill-tag" data-cursor-hover>CSS3</span>
+                            <span class="skill-tag" data-cursor-hover>JavaScript</span>
+                            <span class="skill-tag" data-cursor-hover>React</span>
+                            <span class="skill-tag" data-cursor-hover>Figma</span>
+                            <span class="skill-tag" data-cursor-hover>Premiere Pro</span>
+                            <span class="skill-tag" data-cursor-hover>After Effects</span>
+                            <span class="skill-tag" data-cursor-hover>UI/UX Design</span>
+                            <span class="skill-tag" data-cursor-hover>Photoshop</span>
+                            <span class="skill-tag" data-cursor-hover>Illustrator</span>
+                            <span class="skill-tag" data-cursor-hover>Motion Design</span>
+                            <span class="skill-tag" data-cursor-hover>Git</span>
+                        </div>
+                    </div>
+
+                    <!-- ── Right Column (40%) ── -->
+                    <div class="about__right" data-slide="right">
+                        <div class="about__img-wrap" data-cursor-hover>
+                            <!-- Offset lime border frames -->
+                            <div class="about__img-frame about__img-frame--back" aria-hidden="true"></div>
+                            <div class="about__img-frame about__img-frame--mid" aria-hidden="true"></div>
+
+                            <!-- Image block (stylised placeholder) -->
+                            <div class="about__img-block"> 
+                                
+                                <!-- Decorative inner grid lines -->
+                                <div class="about__img-inner" aria-hidden="true">
+                                    <span class="about__img-tag">Jainav Chitroda</span>
+                                    <div class="about__img-lines">
+                                        <img src="Jainav.jpeg" alt="A1 Design Center Website Preview">
+                                        <div class="about__img-line"></div>
+                                        <div class="about__img-line"></div>
+                                        <div class="about__img-line"></div>
+                                    </div>
+                                    <div class="about__img-corner about__img-corner--tl"></div>
+                                    <div class="about__img-corner about__img-corner--tr"></div>
+                                    <div class="about__img-corner about__img-corner--bl"></div>
+                                    <div class="about__img-corner about__img-corner--br"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stat strip below image -->
+                        <div class="about__stats-strip">
+                            <div class="about__stat">
+                                <span class="about__stat-num">50+</span>
+                                <span class="about__stat-label">Projects</span>
+                            </div>
+                            <div class="about__stat-divider"></div>
+                            <div class="about__stat">
+                                <span class="about__stat-num">3+</span>
+                                <span class="about__stat-label">Years Exp.</span>
+                            </div>
+                            <div class="about__stat-divider"></div>
+                            <div class="about__stat">
+                                <span class="about__stat-num">20+</span>
+                                <span class="about__stat-label">Clients</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════
+         PROJECTS
+    ══════════════════════════════════════════ -->
+        <section class="section projects" id="projects">
+            <div class="section__inner">
+                <div class="section__header">
+                    <p class="label section__label">/ 02 &nbsp; Projects</p>
+                    <h2 class="section__title">Selected Work</h2>
+                </div>
+
+                <div class="projects__grid">
+                    <!-- Card 1 -->
+                    <article class="project-card" data-cursor-hover>
+
+                        <!-- Website Image Instead of Gradient -->
+                        <div class="project-card__img">
+                            <img src="assets/web/A1design.png" alt="A1 Design Center Website Preview">
+                            <span class="project-card__num">01</span>
+                        </div>
+
+                        <div class="project-card__body">
+                            <div class="project-card__meta">
+                                <span class="label">Web Design</span>
+                                <span class="label">2025</span>
+                            </div>
+
+                            <h3 class="project-card__title">A1 Design Center</h3>
+
+                            <p class="project-card__desc">
+                                Modern responsive website designed for interior and architectural solutions with premium
+                                UI aesthetics.
+                            </p>
+
+                            <!-- OPEN IN NEW TAB -->
+                            <a href="https://a1designcenter.com/" class="project-card__link" target="_blank"
+                                rel="noopener noreferrer" data-cursor-hover>
+                                View Project <span>→</span>
+                            </a>
+                        </div>
+
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="project-card" data-cursor-hover>
+                        <div class="project-card__img"
+                            style="background: linear-gradient(135deg, #0d1b0d 0%, #0a2e0a 50%, #0c4d0c 100%);">
+                            <span class="project-card__num">02</span>
+                        </div>
+                        <div class="project-card__body">
+                            <div class="project-card__meta">
+                                <span class="label">Branding + Dev</span>
+                                <span class="label">2025</span>
+                            </div>
+                            <h3 class="project-card__title">Stone &amp; Marble Studio</h3>
+                            <p class="project-card__desc">Full brand identity and responsive website for an
+                                architectural stone arts studio with parallax effects.</p>
+                            <a href="#" class="project-card__link" data-cursor-hover>View Project <span>→</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="project-card" data-cursor-hover>
+                        <div class="project-card__img"
+                            style="background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #451a70 100%);">
+                            <span class="project-card__num">03</span>
+                        </div>
+                        <div class="project-card__body">
+                            <div class="project-card__meta">
+                                <span class="label">UI/UX</span>
+                                <span class="label">2024</span>
+                            </div>
+                            <h3 class="project-card__title">Scent Discovery App</h3>
+                            <p class="project-card__desc">Interactive fragrance discovery experience with mood-based
+                                filters and immersive animated transitions.</p>
+                            <a href="#" class="project-card__link" data-cursor-hover>View Project <span>→</span></a>
+                        </div>
+                    </article>
+
+                    <!-- Card 4 -->
+                    <article class="project-card" data-cursor-hover>
+                        <div class="project-card__img"
+                            style="background: linear-gradient(135deg, #1a0a0a 0%, #2e1a1a 50%, #4d0c0c 100%);">
+                            <span class="project-card__num">04</span>
+                        </div>
+                        <div class="project-card__body">
+                            <div class="project-card__meta">
+                                <span class="label">Landing Page</span>
+                                <span class="label">2024</span>
+                            </div>
+                            <h3 class="project-card__title">Premium Agency Site</h3>
+                            <p class="project-card__desc">High-converting agency landing page with glassmorphism cards,
+                                smooth animations, and premium dark UI.</p>
+                            <a href="#" class="project-card__link" data-cursor-hover>View Project <span>→</span></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════
+         VIDEO EDITS
+    ══════════════════════════════════════════ -->
+        <section class="section video-edits" id="video-edits">
+            <div class="section__inner">
+                <div class="section__header">
+                    <p class="label section__label">/ 03 &nbsp; Video Edits</p>
+                    <h2 class="section__title">Motion <span class="accent">Craft</span></h2>
+                </div>
+
+                <div class="video-grid">
+                    <div class="video-card" data-cursor-hover>
+                        <div class="video-card__thumb">
+                            <div class="video-card__play" aria-label="Play video">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                            <div class="video-card__overlay">
+                                <span class="label">Short Film Edit</span>
+                                <p>Cinematic colour grade + sound design</p>
+                                <video src="assets/Edits/0117.mp4" autoplay loop muted></video>
+                            </div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3>Cinematic Reel 001</h3>
+                            <span class="label">3:42 min</span>
+                        </div>
+                    </div>
+
+                    <div class="video-card" data-cursor-hover>
+                        <div class="video-card__thumb video-card__thumb--alt">
+                            <div class="video-card__play" aria-label="Play video">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                            <div class="video-card__overlay">
+                                <!-- <span class="label">Brand Campaign</span> -->
+                                <video src="assets/Edits/Sprit.mp4" autoplay loop muted></video>
+                                <!-- <p>Motion graphics + typography animation</p> -->
+                            </div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3>Brand Motion 002</h3>
+                            <span class="label">1:20 min</span>
+                        </div>
+                    </div>
+
+                    <div class="video-card" data-cursor-hover>
+                        <div class="video-card__thumb video-card__thumb--alt2">
+                            <div class="video-card__play" aria-label="Play video">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </div>
+                            <div class="video-card__overlay">
+                                <span class="label">Social Media</span>
+                                <p>Reels + TikTok style viral edit</p>
+                            </div>
+                        </div>
+                        <div class="video-card__info">
+                            <h3>Event Highlight 003</h3>
+                            <span class="label">0:58 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════
+         POSTERS & DESIGN
+    ══════════════════════════════════════════ -->
+        <section class="section posters" id="posters">
+            <div class="section__inner">
+                <div class="section__header">
+                    <p class="label section__label">/ 04 &nbsp; Posters &amp; Design</p>
+                    <h2 class="section__title">Visual <span class="accent">Identity</span></h2>
+                </div>
+
+                <div class="posters__grid">
+                    <div class="poster-card poster-card--tall" data-cursor-hover>
+                        <div class="poster-card__inner"
+                            style="background: linear-gradient(160deg, #0d0d0d 0%, #1a1a0d 40%, #2a2a00 100%);">
+                            <div class="poster-card__content">
+                                <img src="assets/design/choco.png">
+                                <span class="label">Event Poster</span>
+                                <h3>COLD COFFEE </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="poster-card" data-cursor-hover>
+                        <div class="poster-card__inner"
+                            style="background: linear-gradient(160deg, #0d0012 0%, #1a003d 60%, #2a0066 100%);">
+                            <div class="poster-card__content">
+                                <img src="assets/design/Nike.png">
+                                <span class="label">Brand Identity</span>
+                                <h3>NIKE</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="poster-card" data-cursor-hover>
+                        <div class="poster-card__inner"
+                            style="background: linear-gradient(160deg, #000d0d 0%, #003d2a 60%, #00664d 100%);">
+                            <div class="poster-card__content">
+                                <img src="assets/design/Donut.png">
+                                <span class="label">Product Design</span>
+                                <h3>NEW LAUNCH</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="poster-card poster-card--wide" data-cursor-hover>
+                        <div class="poster-card__inner"
+                            style="background: linear-gradient(160deg, #0d0800 0%, #3d2200 60%, #664400 100%);">
+                            <div class="poster-card__content">
+                                <span class="label">Album Art</span>
+                                <h3>GOLDEN STATIC</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="poster-card" data-cursor-hover>
+                        <div class="poster-card__inner"
+                            style="background: linear-gradient(160deg, #0d000d 0%, #3d003d 60%, #660066 100%);">
+                            <div class="poster-card__content">
+                                <span class="label">Typography</span>
+                                <img src="assets/design/nescafe.png">
+                                <h3>NESCAFE</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════
+         CONTACT
+    ══════════════════════════════════════════ -->
+        <section class="section contact" id="contact">
+            <div class="section__inner">
+                <div class="section__header">
+                    <p class="label section__label">/ 05 &nbsp; Contact</p>
+                    <h2 class="section__title">Let's <span class="accent">Connect</span></h2>
+                </div>
+
+                <div class="contact__grid">
+                    <div class="contact__left">
+                        <p class="contact__intro">Got a project in mind? Let's create something extraordinary together.
+                            I'm available for freelance, collaborations, and full-time opportunities.</p>
+                        <div class="contact__links">
+                            <a href="mailto:hello@yourname.com" class="contact__link" data-cursor-hover>
+                                <span class="label">Email</span>
+                                <span>hello@yourname.com <span class="accent">↗</span></span>
+                            </a>
+                            <a href="#" class="contact__link" data-cursor-hover>
+                                <span class="label">Instagram</span>
+                                <span>@yourname <span class="accent">↗</span></span>
+                            </a>
+                            <a href="#" class="contact__link" data-cursor-hover>
+                                <span class="label">LinkedIn</span>
+                                <span>linkedin.com/in/yourname <span class="accent">↗</span></span>
+                            </a>
+                            <a href="#" class="contact__link" data-cursor-hover>
+                                <span class="label">GitHub</span>
+                                <span>github.com/yourname <span class="accent">↗</span></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- <form class="contact__form" id="contact-form" novalidate>
+                        <div class="form-group">
+                            <label for="name" class="label">Your Name</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="Jane Doe"
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="label">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-input"
+                                placeholder="jane@example.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="label">Message</label>
+                            <textarea id="message" name="message" class="form-input form-textarea"
+                                placeholder="Tell me about your project..." rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full" data-cursor-hover>
+                            Send Message <span class="btn__arrow">→</span>
+                        </button>
+                    </form> -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ─── Footer ─── -->
+    <footer class="footer">
+        <div class="footer__inner">
+            <span class="nav__logo">YourName.</span>
+            <p class="label">© 2026 — Designed &amp; Built by YourName</p>
+            <div class="footer__socials">
+                <a href="#" class="footer__social" data-cursor-hover aria-label="Instagram">IG</a>
+                <a href="#" class="footer__social" data-cursor-hover aria-label="LinkedIn">LI</a>
+                <a href="#" class="footer__social" data-cursor-hover aria-label="GitHub">GH</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
