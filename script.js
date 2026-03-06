@@ -1,4 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════
+﻿/* ═══════════════════════════════════════════════════════════════
    script.js — YourName. Portfolio
    ═══════════════════════════════════════════════════════════════ */
 
@@ -276,4 +276,46 @@
   );
 
   slideEls.forEach((el) => observer.observe(el));
+})();
+
+
+
+
+/* --------------------------------------------------------------
+   8. VIDEO PLAYBACK LOGIC — Toggle play/pause inline natively
+--------------------------------------------------------------- */
+(function initVideoPlayback() {
+  const videoCards = document.querySelectorAll('.video-card');
+
+  videoCards.forEach(card => {
+    const video = card.querySelector('.video-card__video');
+    if (!video) return;
+
+    // Toggle play/pause
+    const togglePlay = () => {
+      if (video.paused) {
+        // Pause all other videos first for better UX
+        document.querySelectorAll('.video-card__video').forEach(v => {
+          if (v !== video && !v.paused) {
+            v.pause();
+            const parentCard = v.closest('.video-card');
+            if (parentCard) parentCard.classList.remove('is-playing');
+          }
+        });
+
+        video.play();
+        card.classList.add('is-playing');
+      } else {
+        video.pause();
+        card.classList.remove('is-playing');
+      }
+    };
+
+    // Click on the card itself to trigger play/pause
+    card.addEventListener('click', (e) => {
+      // Don't trigger if they clicked a tag or external logic piece
+      if (e.target.closest('a') && e.target.closest('a') !== card) return;
+      togglePlay();
+    });
+  });
 })();
