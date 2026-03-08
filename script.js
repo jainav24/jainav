@@ -4,68 +4,6 @@
 
 'use strict';
 
-/* ──────────────────────────────────────────────────────────────
-   1. CUSTOM CURSOR — Lerp animation
-─────────────────────────────────────────────────────────────── */
-(function initCursor() {
-  // Only activate on devices that support hover
-  if (!window.matchMedia('(hover: hover)').matches) return;
-
-  const cursor = document.getElementById('cursor');
-  const cursorDot = document.getElementById('cursor-dot');
-
-  if (!cursor || !cursorDot) return;
-
-  let mouseX = window.innerWidth / 2;
-  let mouseY = window.innerHeight / 2;
-  let lerpX = mouseX;
-  let lerpY = mouseY;
-
-  const LERP_FACTOR = 0.12; // smoothing (0 = no move, 1 = instant)
-
-  // Track raw mouse position
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-
-    // Cursor dot follows instantly for snappy feel
-    cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-  });
-
-  // Smooth lerp loop for main cursor ring
-  function animate() {
-    lerpX += (mouseX - lerpX) * LERP_FACTOR;
-    lerpY += (mouseY - lerpY) * LERP_FACTOR;
-
-    cursor.style.transform = `translate(${lerpX}px, ${lerpY}px) translate(-50%, -50%)`;
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  // Hide cursor when leaving window
-  document.addEventListener('mouseleave', () => {
-    cursor.style.opacity = '0';
-    cursorDot.style.opacity = '0';
-  });
-  document.addEventListener('mouseenter', () => {
-    cursor.style.opacity = '1';
-    cursorDot.style.opacity = '1';
-  });
-
-  // Interactive hover: grow cursor + blend mode
-  const hoverTargets = document.querySelectorAll('[data-cursor-hover], a, button, input, textarea');
-
-  hoverTargets.forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('is-hovering');
-      cursorDot.classList.add('is-hovering');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('is-hovering');
-      cursorDot.classList.remove('is-hovering');
-    });
-  });
-})();
 
 
 /* ──────────────────────────────────────────────────────────────
@@ -282,40 +220,103 @@
 
 
 /* --------------------------------------------------------------
-   8. VIDEO PLAYBACK LOGIC — Toggle play/pause inline natively
+   8. VIDEO MODAL LOGIC — Popup player with blur
 --------------------------------------------------------------- */
-(function initVideoPlayback() {
+(function initVideoModal() {
   const videoCards = document.querySelectorAll('.video-card');
+  const videoModal = document.getElementById('video-modal');
+  const modalVideo = document.getElementById('modal-video-player');
+  const closeBtn = document.getElementById('video-modal-close');
+  const overlay = document.getElementById('video-modal-overlay');
+
+  if (!videoModal || !modalVideo) return;
+
+  const openVideoModal = (src) => {
+    modalVideo.src = src;
+    videoModal.classList.add('is-open');
+    videoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Prevent scroll
+    modalVideo.play();
+  };
+
+  const closeVideoModal = () => {
+    videoModal.classList.remove('is-open');
+    videoModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    modalVideo.pause();
+    modalVideo.src = ''; // Clear source to stop buffering
+  };
 
   videoCards.forEach(card => {
-    const video = card.querySelector('.video-card__video');
-    if (!video) return;
-
-    // Toggle play/pause
-    const togglePlay = () => {
-      if (video.paused) {
-        // Pause all other videos first for better UX
-        document.querySelectorAll('.video-card__video').forEach(v => {
-          if (v !== video && !v.paused) {
-            v.pause();
-            const parentCard = v.closest('.video-card');
-            if (parentCard) parentCard.classList.remove('is-playing');
-          }
-        });
-
-        video.play();
-        card.classList.add('is-playing');
-      } else {
-        video.pause();
-        card.classList.remove('is-playing');
-      }
-    };
-
-    // Click on the card itself to trigger play/pause
-    card.addEventListener('click', (e) => {
-      // Don't trigger if they clicked a tag or external logic piece
-      if (e.target.closest('a') && e.target.closest('a') !== card) return;
-      togglePlay();
+    card.addEventListener('click', () => {
+      const videoSrc = card.getAttribute('data-video-src');
+      if (videoSrc) openVideoModal(videoSrc);
     });
+
+    // Small hover-to-preview logic
+    const previewVideo = card.querySelector('video');
+    if (previewVideo) {
+      card.addEventListener('mouseenter', () => previewVideo.play());
+      card.addEventListener('mouseleave', () => {
+        previewVideo.pause();
+        previewVideo.currentTime = 0;
+      });
+    }
+  });
+
+  closeBtn?.addEventListener('click', closeVideoModal);
+  overlay?.addEventListener('click', closeVideoModal);
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && videoModal.classList.contains('is-open')) {
+      closeVideoModal();
+    }
+  });
+})();
+
+
+/* ──────────────────────────────────────────────────────────────
+   9. POSTER MODAL — Immersive fullscreen view
+─────────────────────────────────────────────────────────────── */
+(function initPosterModal() {
+  const modal = document.getElementById('poster-modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalClose = document.getElementById('modal-close');
+  const modalOverlay = document.getElementById('modal-overlay');
+  const posterCards = document.querySelectorAll('.poster-card');
+
+  if (!modal || !modalImg || !posterCards.length) return;
+
+  const openModal = (src) => {
+    modalImg.src = src;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    setTimeout(() => { modalImg.src = ''; }, 400);
+  };
+
+  posterCards.forEach(card => {
+    const img = card.querySelector('.poster-card__bg');
+    if (!img) return;
+
+    card.addEventListener('click', () => {
+      openModal(img.src);
+    });
+  });
+
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+      closeModal();
+    }
   });
 })();
