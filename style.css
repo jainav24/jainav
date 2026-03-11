@@ -63,6 +63,7 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 
@@ -84,6 +85,7 @@ a {
 img,
 video {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -556,13 +558,13 @@ ol {
 /* Giant display heading */
 .hero__title {
   font-family: var(--font-head);
-  font-size: clamp(3.25rem, 7.5vw, 7.5rem);
+  font-size: clamp(2.5rem, 7.5vw, 7.5rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.0;
   color: var(--clr-text);
   margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
-  /* No wrapping within a line */
+  overflow-wrap: break-word;
 }
 
 .hero__title-line {
@@ -751,7 +753,7 @@ ol {
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 480px) {
   .hero__cta {
     flex-direction: column;
   }
@@ -1151,6 +1153,19 @@ ol {
   flex-shrink: 0;
 }
 
+@media (max-width: 480px) {
+  .about__stats-strip {
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+
+  .about__stat-divider {
+    width: 100%;
+    height: 1px;
+  }
+}
+
 /* ── Slide-in scroll animation ── */
 [data-slide] {
   opacity: 0;
@@ -1480,8 +1495,8 @@ ol {
 
 @media (max-width: 768px) {
   .video-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
@@ -1675,7 +1690,7 @@ ol {
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 600px) {
   .posters__grid {
     grid-template-columns: 1fr;
   }
